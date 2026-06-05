@@ -1,0 +1,235 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    @if (!this.bdform) {
+        <div class="container">
+            <h5 class="text-danger text-center">Los datos no se guardaron en la base de datos</h5>
+        </div>
+    }
+    
+    <div class="container header-wrapper" >
+        <div class="row justify-content-center mb-4" style="margin-bottom: 4%;">
+            <div class="card header-card">
+                <div class="card-body text-center py-5">
+                    <div class="profile-avatar mb-3">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h2 class="mb-1 text-white">{{nombre}}</h2>
+                    <p class="mb-0 fs-5 opacity-75 text-white">COLEGIO: {{colegio}}</p>
+                    <!--
+                    
+                    <div class="mt-3">
+                        <span class="badge text-white me-2">
+                            <i class="fas fa-id-card me-1"></i>CI: {{carnet}}
+                        </span>
+                        <span class="badge text-white me-2">
+                            <i class="fas fa-birthday-cake me-1"></i>{{edad}} años
+                        </span>
+                        <span class="badge text-white">
+                            <i class="fas fa-phone me-1"></i>{{celular}}
+                        </span>
+                    </div>-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container justify-content-center">
+            <!-- Resultados Generales -->
+            <div class="row mb-4">
+                <div class="col-lg-6 mb-4">
+                    <div class="card card-custom">
+                        <div class="card-body">
+                            <h5 class="section-title">
+                                <i class="fas fa-chart-line me-2"></i>Resultados Generales
+                            </h5>
+                            
+                            <div class="row">
+                                <h5 class="text-primary text-center mb-1" >Test Chaside</h5>
+                                <div class="col-md-6 mb-3">
+                                    <div class="text-center">
+                                        <h6 class="text-muted mb-2">Aptitud</h6>
+                                        <div class="progress progress-custom mb-2">
+                                            <div class="progress-bar progress-bar-custom" role="progressbar" 
+                                                style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="5">
+                                                {{aptitud}} puntos
+                                            </div>
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="text-center">
+                                        <h6 class="text-muted mb-2">Interés</h6>
+                                        <div class="progress progress-custom mb-2">
+                                            <div class="progress-bar progress-bar-custom" role="progressbar" 
+                                                style="width: 100%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                                                {{interes}} puntos
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="text-center">
+                                        <span class="badge badge-custom bg-success mx-auto">{{ramaChaside}}
+                                        </span>
+                                    </div>
+                                    <div class="text-center mt-1">
+                                        <span class="badge badge-custom bg-success mx-auto">{{tablaChaside}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <h6 class="text-muted mb-2">Test de Holland (Personalidades dominantes) </h6>
+                                <div class="mb-2">
+                                    @if (holland[0] == 'R') {<span class="holland-code holland-R holland-code-small">{{holland[0]}}</span>}
+                                    @else if (holland[0] == 'I') {<span class="holland-code holland-I holland-code-small">{{holland[0]}}</span> }
+                                    @else if (holland[0] == 'A') {<span class="holland-code holland-A holland-code-small">{{holland[0]}}</span> }
+                                    @else if (holland[0] == 'S') {<span class="holland-code holland-S holland-code-small">{{holland[0]}}</span> }
+                                    @else if (holland[0] == 'E') {<span class="holland-code holland-E holland-code-small">{{holland[0]}}</span> }
+                                    @else if (holland[0] == 'C') {<span class="holland-code holland-C holland-code-small">{{holland[0]}}</span> }
+                                    
+                                    @if (holland[1] == 'R') {<span class="holland-code holland-R holland-code-small">{{holland[1]}}</span>}
+                                    @else if (holland[1] == 'I') {<span class="holland-code holland-I holland-code-small">{{holland[1]}}</span> }
+                                    @else if (holland[1] == 'A') {<span class="holland-code holland-A holland-code-small">{{holland[1]}}</span> }
+                                    @else if (holland[1] == 'S') {<span class="holland-code holland-S holland-code-small">{{holland[1]}}</span> }
+                                    @else if (holland[1] == 'E') {<span class="holland-code holland-E holland-code-small">{{holland[1]}}</span> }
+                                    @else if (holland[1] == 'C') {<span class="holland-code holland-C holland-code-small">{{holland[1]}}</span> }
+                                    
+                                    @if (holland[2] == 'R') {<span class="holland-code holland-R holland-code-small">{{holland[2]}}</span>}
+                                    @else if (holland[2] == 'I') {<span class="holland-code holland-I holland-code-small">{{holland[2]}}</span> }
+                                    @else if (holland[2] == 'A') {<span class="holland-code holland-A holland-code-small">{{holland[2]}}</span> }
+                                    @else if (holland[2] == 'S') {<span class="holland-code holland-S holland-code-small">{{holland[2]}}</span> }
+                                    @else if (holland[2] == 'E') {<span class="holland-code holland-E holland-code-small">{{holland[2]}}</span> }
+                                    @else if (holland[2] == 'C') {<span class="holland-code holland-C holland-code-small">{{holland[2]}}</span> }
+                                    
+                                </div>
+                                <div class="holland-legend">
+                                    <strong>{{holland[0]}}:</strong> {{personalidadP}} | <strong>{{holland[1]}}:</strong> {{personalidadS}} | <strong>{{holland[2]}}:</strong> {{personalidadT}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-4">
+                    <div class="card card-custom">
+                        <div class="card-body">
+                            <h5 class="section-title">
+                                <i class="fas fa-user me-2"></i>Información Personal
+                            </h5>
+                            
+                            <div class="info-item">
+                                <i class="fas fa-map-location"></i>
+                                <span><strong>Municipio:</strong> &nbsp;{{municipio}}</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-sign"></i>
+                                <span><strong>Provincia:</strong> &nbsp;{{provincia}}</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-school"></i>
+                                <span><strong>Colegio:</strong> &nbsp;{{colegio}}</span>
+                            </div>
+                
+                            <div class="info-item">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span><strong>Curso:</strong> &nbsp;{{curso}}</span>
+                            </div>
+                            <!--
+                            <div class="info-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span><strong>Edad:</strong> &nbsp;{{edad}} años</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span><strong>Celular:</strong>  &nbsp;{{celular}}</span>
+                            </div>
+                            -->
+
+                            <div class="info-item">
+                                <i class="fas fa-calendar-check"></i>
+                                <span><strong>Fecha de Evaluación:</strong> &nbsp;{{fechaStr}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="resultadosChaside" #resuladoChaside>
+            @if(chaside == 'C'){
+                <app-tabla-c [perfil]="holland"></app-tabla-c>
+            }
+            @if(chaside == 'H'){
+                <app-tabla-h [perfil]="holland"></app-tabla-h>
+            }
+            @if(chaside == 'A'){
+                <app-tabla-a [perfil]="holland"></app-tabla-a>
+            }
+            @if(chaside == 'S'){
+                <app-tabla-s [perfil]="holland"></app-tabla-s>
+            }
+            @if(chaside == 'I'){
+                <app-tabla-i [perfil]="holland"></app-tabla-i>
+            }
+            @if(chaside == 'D'){
+                <app-tabla-d [perfil]="holland"></app-tabla-d>
+            }
+            @if(chaside == 'E'){
+                <app-tabla-e [perfil]="holland"></app-tabla-e>
+            }
+            </div> 
+    </div>
+
+        <!-- Información Adicional -->
+    <div class="container justify-content-center">
+            <div class="card card-custom">
+                <div class="card-body">
+                    <h5 class="section-title">
+                        <i class="fas fa-lightbulb me-2"></i>Interpretación de Resultados
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 class="text-muted">¿Qué significan tus personalidades Holland?</h6>
+                            <div class="mb-2">
+                                <span class="holland-code holland-R holland-code-small">{{holland[0]}}</span>
+                                <strong>{{personalidadP}}:</strong> {{descripcionP}}
+                            </div>
+                            <div class="mb-2">
+                                <span class="holland-code holland-S holland-code-small">{{holland[1]}}</span>
+                                <strong>{{personalidadS}}:</strong> {{descripcionS}}
+                            </div>
+                            <div class="mb-2">
+                                <span class="holland-code holland-E holland-code-small">{{holland[2]}}</span>
+                                <strong>{{personalidadT}}:</strong> {{descripcionT}}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 class="text-muted">Recomendaciones</h6>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Considera visitar las facultades que más te interesen</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Habla con profesionales de estas áreas</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Investiga el plan de estudios de cada carrera</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i>Consulta con un orientador vocacional</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center mt-4" style="margin-bottom: 2%;">
+        <p class="text-dark-50">
+            <i class="fas fa-info-circle me-1"></i>
+            Estos resultados son una guía para tu orientación vocacional. 
+            Te recomendamos consultar con un orientador para mayor información.
+        </p>
+    </div>
+    
+    <div class="container mb-4">
+        <div class="d-flex justify-content-center align-items-center" >
+                <button class="btn btn-danger mx-2" (click)="generarPdf()"> GENERAR PDF </button>
+                <a [routerLink]="['/']"><button class="btn btn-primary mx-2">VOLVER AL INICIO</button></a>
+        </div>
+    </div>

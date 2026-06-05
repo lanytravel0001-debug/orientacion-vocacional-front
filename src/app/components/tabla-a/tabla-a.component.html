@@ -1,0 +1,65 @@
+<div class="row mb-4">
+    <div class="col-12">
+        <h3 class="text-dark text-center mb-4">
+            <i class="fas fa-compass me-2"></i> Tu mejor opción vocacional es:
+        </h3>
+    </div>
+</div>
+<div class="row mb-4">
+    <div class="col-lg-4"></div>
+@for (facultad of facultadesArray; track facultad; let i = $index) {
+    @if(facultad[0] === 'FAADU'){
+            <div class="col-lg-4">
+            <!-- FACULTAD DE ARTES ARQUITECTURA DISEÑO Y URBANISMO-->
+                <div class="card card-custom option-card mb-4">
+                    <div class="option-number mt-3 mx-3">{{i+1}}</div>
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <img src="./assets/logos-facultades/FAADU.png" alt="Logo FAADU" class="faculty-logo mb-2">
+                            <h5 class="text-dark mb-1">{{FAADU.nombre}}</h5>
+                            <span class="badge">{{FAADU.codigo}}</span>
+                        </div>
+                        <div class="text-center mb-3">
+                            <h6 class="text-muted mb-2">Personalidades de test Holland</h6>
+                            @for(personalidad of hollandFAADUArray; track personalidad){
+                                @if (personalidad[0] == 'R') {<span class="holland-code holland-R holland-code-small">{{personalidad[0]}}</span>}
+                                @else if (personalidad[0] == 'I') {<span class="holland-code holland-I holland-code-small">{{personalidad[0]}}</span> }
+                                @else if (personalidad[0] == 'A') {<span class="holland-code holland-A holland-code-small">{{personalidad[0]}}</span> }
+                                @else if (personalidad[0] == 'S') {<span class="holland-code holland-S holland-code-small">{{personalidad[0]}}</span> }
+                                @else if (personalidad[0] == 'E') {<span class="holland-code holland-E holland-code-small">{{personalidad[0]}}</span> }
+                                @else if (personalidad[0] == 'C') {<span class="holland-code holland-C holland-code-small">{{personalidad[0]}}</span> }  
+                            }
+                        </div>
+                        <div class="mb-3">
+                            <h6 class="text-muted mb-2">Carreras Disponibles:</h6>
+                            <div class="career-list">
+                                @for( carrera of carrerasFAADU; track carrera){
+                                    <div class="career-item d-flex justify-content-between">{{carrera}}
+                                        <button class="btn btn-primary btn-sm" (click)="mostrarInfo(carrera)">info</button> 
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <a href="https://faadu.umsa.bo/" target="_blank" class="btn btn-danger btn-sm">
+                                <i class="fas fa-external-link-alt me-1"></i>Visitar Sitio Web
+                            </a>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    }
+}
+</div>
+
+<!-- modal -->
+@if (mostrarModal) {
+    <div class="modal-backdrop">
+       <div class="modal-contenido">
+           <h5 class="text-primary">Carrera de {{carrera}}</h5>
+           <img src="{{dirLogo}}" alt="{{carrera}}" class="carrer-logo">
+           <p>{{descripcionCarrera}}</p>
+           <button class="btn btn-danger" (click)="ocultarInfo()">cerrar</button>
+       </div>
+    </div>
+   }

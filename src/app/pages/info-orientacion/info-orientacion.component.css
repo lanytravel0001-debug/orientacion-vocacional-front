@@ -1,0 +1,297 @@
+.umsa-container {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 20px;
+  color: var(--umsa-text);
+}
+
+.umsa-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.umsa-title h1 {
+  color: var(--umsa-blue);
+  font-size: var(--tx-xl);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.umsa-title h2 {
+  color: var(--umsa-blue-light);
+  font-size: var(--tx-lg);
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.umsa-divider {
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--umsa-blue-light), var(--umsa-blue));
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+.umsa-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 0;
+}
+
+.umsa-spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(0, 74, 152, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid var(--umsa-blue);
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.umsa-loader p {
+  color: var(--umsa-blue-light);
+  font-weight: 500;
+}
+
+.umsa-error {
+  background-color: #FFF5F5;
+  border-left: 4px solid #E53E3E;
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+}
+
+.umsa-error i {
+  color: #E53E3E;
+  font-size: var(--tx-base);
+  margin-right: 15px;
+}
+
+.umsa-facultades-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+
+.umsa-facultad-card {
+  background: white;
+  border-radius: var(--card-border-radius);
+  overflow: hidden;
+  box-shadow: 0 5px 15px var(--umsa-shadow);
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+  position: relative;
+  cursor: pointer;
+  height: fit-content;
+}
+
+.umsa-facultad-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px var(--umsa-shadow);
+}
+
+.umsa-facultad-card.active {
+  border: 2px solid var(--umsa-blue);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px var(--umsa-shadow);
+}
+
+.umsa-facultad-header {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(to right, var(--umsa-blue), var(--umsa-blue-dark));
+  color: white;
+  position: relative;
+  height: 120px;
+}
+
+.umsa-facultad-logo {
+  width: 80px;
+  height: 80px;
+  margin-right: 15px;
+  overflow: hidden;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+}
+
+.umsa-facultad-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.umsa-facultad-info {
+  flex-grow: 1;
+}
+
+.umsa-facultad-info h3 {
+  font-size: var(--tx-base);
+  font-weight: 600;
+  margin: 0 0 5px;
+  line-height: 1.3;
+}
+
+.umsa-facultad-codigo {
+  background: linear-gradient(90deg, var(--umsa-blue-light), var(--umsa-blue));
+  width: 65px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: var(--tx-xs);
+  opacity: 0.85;
+  display: block;
+  text-align: center;
+}
+
+.umsa-facultad-toggle {
+  flex-shrink: 0;
+  margin-left: 10px;
+  font-size: var(--tx-base);
+  transition: transform var(--transition-speed);
+}
+
+.umsa-facultad-card.active .umsa-facultad-toggle {
+  transform: rotate(180deg);
+}
+
+.umsa-facultad-carreras {
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  transition: none;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.umsa-facultad-card.active .umsa-facultad-carreras {
+  height: auto;
+  padding: 20px;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity var(--transition-speed);
+}
+
+.umsa-carreras-list {
+  margin-bottom: 20px;
+}
+
+.umsa-carreras-list h4 {
+  color: var(--umsa-blue);
+  font-size: var(--tx-sm);
+  margin-bottom: 15px;
+  border-bottom: 2px solid var(--umsa-blue);
+  padding-bottom: 8px;
+}
+
+.umsa-carreras-list ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.umsa-carreras-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(0, 74, 152, 0.1);
+  font-size: var(--tx-sm);
+  position: relative;
+  padding-left: 20px;
+}
+
+.umsa-carreras-list li:before {
+  content: "•";
+  color: var(--umsa-blue);
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+.umsa-carreras-list li:last-child {
+  border-bottom: none;
+}
+
+.umsa-facultad-footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 15px;
+}
+
+.umsa-btn {
+  display: inline-block;
+  background: linear-gradient(90deg, var(--umsa-blue-dark), var(--umsa-blue));
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color var(--transition-speed), transform var(--transition-speed);
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 3px 10px var(--umsa-shadow);
+}
+
+.umsa-btn:hover {
+  background: linear-gradient(90deg, var(--umsa-blue), var(--umsa-blue-light));
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .umsa-facultades-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .umsa-title h1 {
+      font-size: var(--tx-sm);
+  }
+
+  .umsa-title h2 {
+      font-size: var(--tx-sm);
+  }
+
+  .umsa-logo {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.umsa-facultad-carreras {
+  animation: slideDown var(--transition-speed);
+}
+
+@keyframes slideDown {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+
+  to {
+    max-height: 600px;
+    opacity: 1;
+  }
+}
+
+.bi {
+  display: inline-block;
+  vertical-align: -0.125em;
+}

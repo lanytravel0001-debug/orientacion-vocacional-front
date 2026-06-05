@@ -1,0 +1,744 @@
+<div class="container mt-3 mb-3 align-items-center">
+
+    <form [formGroup]="form" autocomplete="off" (submit)="guardarResultado()">
+
+        <!-- formulario de registro de estudiante -->
+        <div class="container" [hidden]="formularioActived" style="margin-bottom: 4%;">
+            <h3 class="text-center" style="font-weight: bold; margin: 3%; font-size: 1.80rem;">
+                FORMULARIO DE REGISTRO</h3>
+            <div class="card mb-3 card-seccion1">
+                <h5 class="mx-3 fw-bold" style="letter-spacing: 1px; font-size: 1.35rem; margin: 8px 0; color:#32639e ">
+                </h5>
+                <span class="text-danger mx-3">Completa <span style="font-weight: 700;">TODOS</span> los campos del
+                    registro
+                    siguiendo el formato indicado</span>
+                <span class="text-danger mx-3" style="margin-bottom: 10px;">Al completar el
+                    registro presiona en el boton de <span style="font-weight: 700;">SIGUIENTE</span> </span>
+            </div>
+
+            <div class="card card-seccion2">
+                <div class="card-container"></div>
+                <div class="card-body align-items-center">
+                    <div class="row g-3">
+
+                        <!-- Carnet de Identidad -->
+                        <div class="col-md-3">
+                            <label class="campo-label" [class.error]="enviadoEst() && carnetNum?.invalid">
+                                <i class="bi bi-credit-card-fill campo-icono"></i>
+                                Carnet de Identidad *
+                            </label>
+                            <div class="campo-wrapper" [class.campo-error]="enviadoEst() && carnetNum?.invalid">
+                                <input type="number" class="campo-input" placeholder="Ej: 12345678"
+                                    formControlName="carnetNum">
+                            </div>
+                            <span class="campo-ayuda">Solo el número, sin letras</span>
+                        </div>
+
+                        <!-- Extensión -->
+                        <div class="col-md-3">
+                            <label class="campo-label" [class.error]="enviadoEst() && carnetExt?.invalid">
+                                <i class="bi bi-geo-alt-fill campo-icono"></i>
+                                Extensión *
+                            </label>
+                            <div class="campo-wrapper" [class.campo-error]="enviadoEst() && carnetExt?.invalid">
+                                <select class="campo-input" formControlName="carnetExt">
+                                    <option [ngValue]="null" disabled selected>-- Elige --</option>
+                                    <option value="LP">La Paz (LP)</option>
+                                    <option value="SCZ">Santa Cruz (SCZ)</option>
+                                    <option value="CB">Cochabamba (CB)</option>
+                                    <option value="TJ">Tarija (TJ)</option>
+                                    <option value="OR">Oruro (OR)</option>
+                                    <option value="PT">Potosí (PT)</option>
+                                    <option value="BN">Beni (BN)</option>
+                                    <option value="PA">Pando (PA)</option>
+                                    <option value="CH">Chuquisaca (CH)</option>
+                                </select>
+                            </div>
+                            <span class="campo-ayuda">Departamento del carnet</span>
+                        </div>
+
+                        <!-- Nombres -->
+                        <div class="col-md-12">
+                            <label class="campo-label" [class.error]="enviadoEst() && nombre?.invalid">
+                                <i class="bi bi-person-fill campo-icono"></i>
+                                Nombres *
+                            </label>
+                            <div class="campo-wrapper" [class.campo-error]="enviadoEst() && nombre?.invalid">
+                                <input type="text" class="campo-input uppercase-input" formControlName="nombre"
+                                    placeholder="Ej: JUAN CARLOS">
+                            </div>
+                        </div>
+
+                        <!-- Apellido Paterno -->
+                        <div class="col-md-6">
+                            <label class="campo-label" [class.error]="enviadoEst() && apPaterno?.invalid">
+                                <i class="bi bi-person-vcard-fill campo-icono"></i>
+                                Apellido Paterno *
+                            </label>
+                            <div class="campo-wrapper" [class.campo-error]="enviadoEst() && apPaterno?.invalid">
+                                <input type="text" class="campo-input uppercase-input" formControlName="apPaterno"
+                                    placeholder="Ej: PEREZ">
+                            </div>
+                        </div>
+
+                        <!-- Apellido Materno -->
+                        <div class="col-md-6">
+                            <label class="campo-label" [class.error]="enviadoEst() && apMaterno?.invalid">
+                                <i class="bi bi-person-vcard campo-icono"></i>
+                                Apellido Materno *
+                            </label>
+                            <div class="campo-wrapper" [class.campo-error]="enviadoEst() && apMaterno?.invalid">
+                                <input type="text" class="campo-input uppercase-input" formControlName="apMaterno"
+                                    placeholder="Ej: GOMEZ">
+                            </div>
+                        </div>
+
+                        <!-- Colegio -->
+                        <div class="col-md-8">
+                            <label class="campo-label" [class.error]="enviadoEst() && colegio?.invalid">
+                                <i class="bi bi-building-fill campo-icono"></i>
+                                Nombre del Colegio *
+                            </label>
+                            <div class="campo-wrapper" [class.campo-error]="enviadoEst() && colegio?.invalid">
+                                <input type="text" class="campo-input uppercase-input" formControlName="colegio"
+                                    placeholder="Ej: NACIONAL SIMON BOLIVAR">
+                            </div>
+                        </div>
+
+                        <!-- Curso -->
+                        <div class="col-md-4">
+                            <label class="campo-label" [class.error]="enviadoEst() && curso?.invalid">
+                                <i class="bi bi-mortarboard-fill campo-icono"></i>
+                                Curso *
+                            </label>
+                            <div class="campo-wrapper" [class.campo-error]="enviadoEst() && curso?.invalid">
+                                <select class="campo-input" formControlName="curso">
+                                    <option [ngValue]="null" disabled selected>-- Elige tu curso --</option>
+                                    <option value="1ro SECUNDARIA">1ro Secundaria</option>
+                                    <option value="2do SECUNDARIA">2do Secundaria</option>
+                                    <option value="3ro SECUNDARIA">3ro Secundaria</option>
+                                    <option value="4to SECUNDARIA">4to Secundaria</option>
+                                    <option value="5to SECUNDARIA">5to Secundaria</option>
+                                    <option value="6to SECUNDARIA">6to Secundaria</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Edad -->
+                        <div class="col-md-6">
+                            <label class="campo-label" [class.error]="enviadoEst() && edad?.invalid">
+                                <i class="bi bi-calendar2-heart-fill campo-icono"></i>
+                                Edad *
+                            </label>
+                            <div class="campo-wrapper" [class.campo-error]="enviadoEst() && edad?.invalid">
+                                <input type="number" class="campo-input" formControlName="edad" placeholder="Ej: 16">
+                            </div>
+                        </div>
+
+                        <!-- Celular -->
+                        <div class="col-md-6">
+                            <label class="campo-label" [class.error]="enviadoEst() && celular?.invalid">
+                                <i class="bi bi-phone-fill campo-icono"></i>
+                                Número de Celular *
+                            </label>
+                            <div class="campo-wrapper" [class.campo-error]="enviadoEst() && celular?.invalid">
+                                <input type="number" class="campo-input" formControlName="celular"
+                                    placeholder="Ej: 77112233">
+                            </div>
+
+                        </div>
+
+                        <!-- Provincia -->
+                        <div class="col-md-6">
+                            <label class="campo-label" [class.error]="enviadoEst() && provincia?.invalid">
+                                <i class="bi bi-map-fill campo-icono"></i>
+                                Provincia *
+                            </label>
+                            <div class="campo-wrapper" [class.campo-error]="enviadoEst() && provincia?.invalid">
+                                <select class="campo-input" formControlName="provincia">
+                                    <option [ngValue]="null" disabled selected>-- Selecciona tu Provincia --</option>
+                                    @for (prov of provincias; track prov.idProvincia) {
+                                    <option [ngValue]="prov.idProvincia">{{prov.nombre}}</option>
+                                    }
+                                </select>
+                            </div>
+                            @if (enviadoEst() && provincia?.invalid) {
+                            <div class="campo-error-msg">Debes seleccionar una provincia.</div>
+                            }
+                        </div>
+
+                        <!-- Municipio -->
+                        <div class="col-md-6">
+                            <label class="campo-label" [class.error]="enviadoEst() && municipio?.invalid">
+                                <i class="bi bi-pin-map-fill campo-icono"></i>
+                                Municipio *
+                            </label>
+                            <div class="campo-wrapper" [class.campo-error]="enviadoEst() && municipio?.invalid">
+                                <select class="campo-input" formControlName="municipio">
+                                    <option [ngValue]="null" disabled selected>-- Selecciona tu Municipio --</option>
+
+                                    @if (provincia!.value) {
+                                    <optgroup label="Municipios de la provincia seleccionada">
+                                        @for (mun of todosMunicipios; track mun.idMunicipio) {
+                                        @if (mun.idProvincia === provincia!.value) {
+                                        <option [ngValue]="mun.idMunicipio">{{mun.nombre}}</option>
+                                        }
+                                        }
+                                    </optgroup>
+
+                                    <optgroup label="Otros municipios">
+                                        @for (mun of todosMunicipios; track mun.idMunicipio) {
+                                        @if (mun.idProvincia !== provincia!.value) {
+                                        <option [ngValue]="mun.idMunicipio">{{mun.nombre}}</option>
+                                        }
+                                        }
+                                    </optgroup>
+                                    } @else {
+                                    @for (mun of todosMunicipios; track mun.idMunicipio) {
+                                    <option [ngValue]="mun.idMunicipio">{{mun.nombre}}</option>
+                                    }
+                                    }
+                                </select>
+                            </div>
+                            @if (enviadoEst() && municipio?.invalid) {
+                            <div class="campo-error-msg">Debes seleccionar un municipio.</div>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+
+                <button class="btn mt-2 mx-auto mb-3" style="background-color: #2d8032; color: white;" type="button"
+                    (click)="mostrarChaside()">SIGUIENTE
+                </button>
+            </div>
+
+        </div>
+
+        <!-- PRIMERA SECCION DE PREGUNTAS CHASIDE INTERES-->
+        <div class="container" [hidden]="chasideActivated" style="margin-bottom: 4%;">
+            <h3 class="text-center" style="font-weight: bold; margin: 3%; font-size: 1.80rem;">
+                TEST VOCACIONAL CHASIDE</h3>
+
+            <div class="card mb-3 card-seccion1">
+                <h5 class="mx-3 mt-2"
+                    style="letter-spacing: 1PX; font-weight: 700; font-size: 1.2rem; margin: 10px 0; color: #32639e;">
+                    SECCIÓN 1: INTERÉS
+                </h5>
+                <span class="text-danger mx-3">Lee atentamenta cada pregunta</span>
+                <span class="text-danger mx-3">Marca <span style="font-weight: 580;">SI</span> o <span
+                        style="font-weight: 570;">NO</span> a cada una de las preguntas</span>
+                <span class="text-danger mx-3">Lee y responde <span style="font-weight: 570;">TODAS</span> las
+                    preguntas sin omitir ninguna</span>
+                <span class="text-danger mx-3">Al terminar, haz clic en <span
+                        style="font-weight: 570;">SIGUIENTE</span></span>
+            </div>
+
+            <div class="card card-seccion2">
+                <div class="card-header text-white" style="border-radius: 10px 10px 0 0; background-color: #2c6494;">
+                    <h5 class="mb-0" style="font-size: 1rem; text-align: center ;">DETALLES DE PREGUNTAS</h5>
+                </div>
+                <div class="card-container"></div>
+                <div class="card-body form-check-inline">
+                    <div class="row" formArrayName="respuestasChI">
+                        @for (preguntain of pregChasideInteres; track preguntain; let i = $index) {
+                        <div class="col-12 question-row px-3 py-1 rounded transition-all">
+                            <div class="row align-items-center">
+                                <div class="col-md-9">
+                                    <p [class.error]="enviadoCh() && respuestasChI.at(i).invalid"> {{i+1}}.
+                                {{preguntain.pregunta}}</p>
+                        </div>
+                        <div class="col-auto selected-option mb-4">
+                            @for (val of [1,0]; track val) {
+                            @if(val===1){
+                            <label class="form-check-label mx-4"> SI
+                                <input class="form-check-input mx-1" style="border: 1px solid #1c1b1b;" type="radio"
+                                    [value]="val" [formControlName]="i.toString()">
+                            </label>
+                            }@else{
+                            <label class="form-check-label mx-4"> NO
+                                <input class="form-check-input mx-1" style="border: 1px solid #1c1b1b;" type="radio"
+                                    [value]="val" [formControlName]="i.toString()">
+                            </label>
+                            }
+                            }
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+                <button class="btn btn-success mb-3 mx-auto" type="button"
+                    (click)="mostrarChasideDos()">SIGUIENTE</button>
+            </div>
+
+        </div>
+
+        <!-- SEGUNDA SECCION DE PREGUNTAS CHASIDE INTERES-->
+        <div class="container" [hidden]="chasideActivatedDos" style="margin-bottom: 4%;">
+            <h3 class="text-center" style="font-weight: bold; margin: 3%;">TEST VOCACIONAL -
+                CHASIDE</h3>
+            <div class="card mb-3 card-seccion1">
+                <h5 class="mx-3 mt-2"
+                    style="letter-spacing: 1PX; font-weight: 700; font-size: 1.2rem; margin: 10px 0; color: #32639e;">
+                    SECCIÓN 2: INTERÉS
+                </h5>
+                <span class="text-danger mx-3">&nbsp;Lee atentamenta cada pregunta</span>
+                <span class="text-danger mx-3">&nbsp;Marca <span style="font-weight: 580;">SI</span> o <span
+                        style="font-weight: 570;">NO</span> a cada una de las preguntas</span>
+                <span class="text-danger mx-3">&nbsp;Lee y responde <span style="font-weight: 570;">TODAS</span> las
+                    preguntas sin omitir ninguna</span>
+                <span class="text-danger mx-3">&nbsp;Al terminar, haz clic en <span
+                        style="font-weight: 570;">SIGUIENTE</span></span>
+            </div>
+
+            <div class="card card-seccion2">
+
+                <div class="card-header text-white" style="border-radius: 10px 10px 0 0; background-color: #2c6494;">
+                    <h5 class="mb-0" style="font-size: 1rem; text-align: center ;">DETALLES DE PREGUNTAS</h5>
+                </div>
+
+                <div class="card-container"></div>
+                <div class="card-body form-check-inline">
+
+                    <div class="row" formArrayName="respuestasChIDos">
+                        @for (preguntain of pregChasideInteresDos; track preguntain; let i = $index) {
+                        <div class="col-12 question-row px-3 py-1 rounded transition-all">
+                            <div class="row align-items-center">
+                                <div class="col-md-9">
+                                    <p [class.error]="enviadoChDos() && respuestasChIDos.at(i).invalid">{{i+1}}.
+                                {{preguntain.pregunta}}</p>
+                        </div>
+                        <div class="col-auto selected-option mb-4">
+                            @for (val of [1,0]; track val) {
+                            @if(val===1){
+                            <label class="form-check-label"> SI
+                                <input class="form-check-input mx-1" style="border: 1px solid #1c1b1b;" type="radio"
+                                    [value]="val" [formControlName]="i.toString()">
+                            </label>
+                            }@else{
+                            <label class="form-check-label mx-4"> NO
+                                <input class="form-check-input mx-1" style="border: 1px solid #1c1b1b;" type="radio"
+                                    [value]="val" [formControlName]="i.toString()">
+                            </label>
+                            }
+
+                            }
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+                <button class="btn btn-success mb-3 mx-auto" type="button"
+                    (click)="mostrarChasideTres()">SIGUIENTE</button>
+            </div>
+        </div>
+
+        <!-- TERCERA SECCION DE PREGUNTAS CHASIDE INTERES-->
+        <div class="container" [hidden]="chasideActivatedTres" style="margin-bottom: 4%;">
+            <h3 class="text-center" style="font-weight: bold; margin: 3%;">TEST VOCACIONAL -
+                CHASIDE</h3>
+
+            <div class="card mb-3 card-seccion1">
+                <h5 class="mx-3 mt-2"
+                    style="letter-spacing: 1PX; font-weight: 700; font-size: 1.2rem; margin: 10px 0; color: #32639e;">
+                    SECCIÓN 3: INTERÉS
+                </h5>
+                <span class="text-danger mx-3">&nbsp;Lee atentamenta cada pregunta</span>
+                <span class="text-danger mx-3">&nbsp;Marca <span style="font-weight: 580;">SI</span> o <span
+                        style="font-weight: 570;">NO</span> a cada una de las preguntas</span>
+                <span class="text-danger mx-3">&nbsp;Lee y responde <span style="font-weight: 570;">TODAS</span> las
+                    preguntas sin omitir ninguna</span>
+                <span class="text-danger mx-3">&nbsp;Al terminar, haz clic en <span
+                        style="font-weight: 570;">SIGUIENTE</span></span>
+            </div>
+
+            <div class="card card-seccion2">
+                <div class="card-header text-white" style="border-radius: 10px 10px 0 0; background-color: #2c6494;">
+                    <h5 class="mb-0" style="font-size: 1rem; text-align: center ;">DETALLES DE PREGUNTAS</h5>
+                </div>
+                <div class="card-container"></div>
+                <div class="card-body form-check-inline">
+                    <div class="row" formArrayName="respuestasChITres">
+                        @for (preguntain of pregChasideInteresTres; track preguntain; let i = $index) {
+                        <div class="col-12 question-row px-3 py-1 rounded transition-all">
+                            <div class="row align-items-center">
+                                <div class="col-md-9">
+                                    <p [class.error]="enviadoChTres() && respuestasChITres.at(i).invalid">{{i+1}}.
+                                {{preguntain.pregunta}}</p>
+                        </div>
+                        <div class="col-auto selected-option mb-4">
+                            @for (val of [1,0]; track val) {
+                            @if(val===1){
+                            <label class="form-check-label"> SI
+                                <input class="form-check-input mx-1" style="border: 1px solid #1c1b1b;" type="radio"
+                                    [value]="val" [formControlName]="i.toString()">
+                            </label>
+                            }@else{
+                            <label class="form-check-label mx-4"> NO
+                                <input class="form-check-input mx-1" style="border: 1px solid #1c1b1b;" type="radio"
+                                    [value]="val" [formControlName]="i.toString()">
+                            </label>
+                            }
+                            }
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+                <button class="btn btn-success mb-3 mx-auto" type="button"
+                    (click)="mostrarChasideCuatro()">SIGUIENTE</button>
+            </div>
+        </div>
+
+        <!-- CUARTA SECCION DE PREGUNTAS CHASIDE INTERES -->
+        <div class="container" [hidden]="chasideActivatedCuatro" style="margin-bottom: 4%;">
+            <h3 class="text-center" style="font-weight: bold; margin: 3%;">TEST VOCACIONAL -
+                CHASIDE</h3>
+
+            <div class="card mb-3 card-seccion1">
+                <h5 class="mx-3 mt-2"
+                    style="letter-spacing: 1PX; font-weight: 700; font-size: 1.2rem; margin: 10px 0; color: #32639e;">
+                    SECCIÓN 4: INTERÉS
+                </h5>
+                <span class="text-danger mx-3">&nbsp;Lee atentamenta cada pregunta</span>
+                <span class="text-danger mx-3">&nbsp;Marca <span style="font-weight: 580;">SI</span> o <span
+                        style="font-weight: 570;">NO</span> a cada una de las preguntas</span>
+                <span class="text-danger mx-3">&nbsp;Lee y responde <span style="font-weight: 570;">TODAS</span> las
+                    preguntas sin omitir ninguna</span>
+                <span class="text-danger mx-3">&nbsp;Al terminar, haz clic en <span
+                        style="font-weight: 570;">SIGUIENTE</span></span>
+            </div>
+
+            <div class="card card-seccion2">
+                <div class="card-header text-white" style="border-radius: 10px 10px 0 0; background-color: #2c6494;">
+                    <h5 class="mb-0" style="font-size: 1rem; text-align: center ;">DETALLES DE PREGUNTAS</h5>
+                </div>
+
+                <div class="card-container"></div>
+                <div class="card-body form-check-inline">
+                    <div class="row" formArrayName="respuestasChICuatro">
+                        @for (preguntain of pregChasideInteresCuatro; track preguntain; let i = $index) {
+                        <div class="col-12 question-row px-3 py-1 rounded transition-all">
+                            <div class="row align-items-center">
+                                <div class="col-md-9">
+                                    <p [class.error]="enviadoChCuatro() && respuestasChICuatro.at(i).invalid">{{i+1}}.
+                                {{preguntain.pregunta}}</p>
+                        </div>
+                        <div class="col-auto selected-option mb-4">
+                            @for (val of [1,0]; track val) {
+                            @if(val===1){
+                            <label class="form-check-label"> SI
+                                <input class="form-check-input" style="border: 1px solid #1c1b1b;" type="radio"
+                                    [value]="val" [formControlName]="i.toString()">
+                            </label>
+                            }@else{
+                            <label class="form-check-label mx-4"> NO
+                                <input class="form-check-input" style="border: 1px solid #1c1b1b;" type="radio"
+                                    [value]="val" [formControlName]="i.toString()">
+                            </label>
+                            }
+                            }
+                        </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+                <button class="btn btn-success mb-3 mx-auto" type="button"
+                    (click)="mostrarChasideCinco()">SIGUIENTE</button>
+            </div>
+        </div>
+
+        <!-- QUINTA SECCION DE PREGUNTAS CHASIDE APTITUD -->
+        <div class="container" [hidden]="chasideActivatedCinco" style="margin-bottom: 4%;">
+            <h3 class="text-center" style="font-weight: bold; margin: 3%;">TEST VOCACIONAL-
+                CHASIDE</h3>
+
+            <div class="card mb-3 card-seccion1">
+                <h5 class="mx-3 mt-2"
+                    style="letter-spacing: 1PX; font-weight: 700; font-size: 1.2rem; margin: 10px 0; color: #32639e;">
+                    SECCIÓN 1: APTITUD
+                </h5>
+                <span class="text-danger mx-3">&nbsp;Lee atentamenta cada pregunta</span>
+                <span class="text-danger mx-3">&nbsp;Marca <span style="font-weight: 580;">SI</span> o <span
+                        style="font-weight: 570;">NO</span> a cada una de las preguntas</span>
+                <span class="text-danger mx-3">&nbsp;Lee y responde <span style="font-weight: 570;">TODAS</span> las
+                    preguntas sin omitir ninguna</span>
+                <span class="text-danger mx-3">&nbsp;Al terminar, haz clic en <span
+                        style="font-weight: 570;">SIGUIENTE</span></span>
+            </div>
+
+
+            <div class="card card-seccion2">
+                <div class="card-header text-white" style="border-radius: 10px 10px 0 0; background-color: #2c6494;">
+                    <h5 class="mb-0" style="font-size: 1rem; text-align: center ;">DETALLES DE PREGUNTAS</h5>
+                </div>
+
+
+                <div class="card-container"></div>
+                <div class="card-body form-check-inline">
+                    <div class="row" formArrayName="respuestasChA">
+                        @for (preguntaap of pregChasideAptitud; track preguntaap; let j = $index) {
+                        <div class="col-12 question-row px-3 py-1 rounded transition-all">
+                            <div class="row align-items-center">
+                                <div class="col-md-9">
+                                    <p [class.error]="enviadoChCinco() && respuestasChA.at(j).invalid">{{j+1}}.
+                                {{preguntaap.pregunta}}</p>
+                        </div>
+                        <div class="col-auto selected-option mb-4">
+                            @for (val of [1,0]; track val) {
+
+                            @if (val === 1) {
+                            <label class="form-check-label"> SI
+                                <input class="form-check-input mx-1" style="border: 1px solid #1c1b1b;" type="radio"
+                                    [value]="val" [formControlName]="j.toString()">
+                            </label>
+                            }@else {
+                            <label class="form-check-label mx-4">NO
+                                <input class="form-check-input mx-1" style="border: 1px solid #1c1b1b;" type="radio"
+                                    [value]="val" [formControlName]="j.toString()">
+                            </label>
+                            }
+
+                            }
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+                <button class="btn btn-success mb-3 mx-auto" type="button"
+                    (click)="mostrarChasideSeis()">SIGUIENTE</button>
+            </div>
+        </div>
+
+        <!-- SEXTA SECCION DE PREGUNTAS CHASIDE APTITUD -->
+        <div class="container" [hidden]="chasideActivatedSeis" style="margin-bottom: 4%;">
+            <h3 class="text-center" style="font-weight: bold; margin: 3%;">TEST VOCACIONAL
+                CHASIDE</h3>
+            <div class="card mb-3 card-seccion1">
+                <h5 class="mx-3"
+                    style="letter-spacing: 1PX; font-weight: bold; font-size: 1.35rem; margin: 10px 0; color: #32639e;">
+                    SECCIÓN 2: APTITUD
+                </h5>
+                <span class="text-danger mx-3">&nbsp;Lee atentamenta cada pregunta</span>
+                <span class="text-danger mx-3">&nbsp;Marca <span style="font-weight: 580;">SI</span> o <span
+                        style="font-weight: 570;">NO</span> a cada una de las preguntas</span>
+                <span class="text-danger mx-3">&nbsp;Lee y responde <span style="font-weight: 570;">TODAS</span> las
+                    preguntas sin omitir ninguna</span>
+                <span class="text-danger mx-3">&nbsp;Al terminar, haz clic en <span
+                        style="font-weight: 570;">SIGUIENTE</span></span>
+            </div>
+            <div class="card card-seccion2">
+                <div class="card-header text-white" style="border-radius: 10px 10px 0 0; background-color: #2c6494;">
+                    <h5 class="mb-0" style="font-size: 1rem; text-align: center ;">DETALLES DE PREGUNTAS</h5>
+                </div>
+
+
+                <div class="card-container"></div>
+                <div class="card-body form-check-inline">
+                    <div class="row" formArrayName="respuestasChADos">
+                        @for (preguntaap of pregChasideAptitudDos; track preguntaap; let j = $index) {
+                        <div class="col-12 question-row px-3 py-1 rounded transition-all">
+                            <div class="row align-items-center">
+                                <div class="col-md-9">
+                                    <p [class.error]="enviadoChSeis() && respuestasChADos.at(j).invalid">{{j+1}}.
+                                {{preguntaap.pregunta}}</p>
+                        </div>
+                        <div class="col-auto selected-option mb-4">
+                            @for (val of [1,0]; track val) {
+                            @if (val === 1) {
+                            <label class="form-check-label"> SI
+                                <input class="form-check-input mx-1" style="border: 1px solid #1c1b1b;" type="radio"
+                                    [value]="val" [formControlName]="j.toString()">
+                            </label>
+                            }@else {
+                            <label class="form-check-label mx-4">NO
+                                <input class="form-check-input mx-1" style="border: 1px solid #1c1b1b;" type="radio"
+                                    [value]="val" [formControlName]="j.toString()">
+                            </label>
+                            }
+                            }
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+                <button class="btn btn-success mb-3 mx-auto" type="button" (click)="mostrarHolland()">SIGUIENTE</button>
+            </div>
+        </div>
+
+        <!-- PRIMERA SECCION TEST DE HOLLAND ACTIVIDADES-->
+        <div class="container" [hidden]="hollandActivated" style="margin-bottom: 4%;">
+            <h3 class="text-center" style="font-weight: bold; margin: 3%;">TEST VOCACIONAL -
+                HOLLAND</h3>
+            <div class="card mb-3 card-seccion1">
+                <h5 class="mx-3"
+                    style="letter-spacing: 1PX; font-weight: bold; font-size: 1.35rem; margin: 10px 0; color: #32639e;">
+                    SECCIÓN 1: ACTIVIDADES
+                </h5>
+                <span class="text-danger mx-3">&nbsp;Lee atentamente cada pregunta</span>
+                <span class="text-danger mx-3 mb-2">&nbsp;Marca solo las actividades que le agrada
+                    realizar</span>
+            </div>
+            <div class="card card-seccion2">
+                <div class="card-header text-white" style="border-radius: 10px 10px 0 0; background-color: #2c6494;">
+                    <h5 class="mb-0" style="font-size: 1rem; text-align: center ;">DETALLES DE OPCIONES</h5>
+                </div>
+
+                <div class="card-container"></div>
+                <div class="card-body form-check-inline">
+                    <div class="row mt-4" formArrayName="respuestasHF">
+                        @for (preguntahf of pregHollandFirst; track preguntahf; let i = $index){
+                        <div class="col-12 col-md-6 question-row px-3 py-1 rounded transition-all">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <p>{{preguntahf.pregunta}}</p>
+                        </div>
+                        <div class="col-md-4">
+                                    <input class="form-check-input" style="border: 1px solid #1c1b1b;" type="checkbox"
+                                        [value]="1" [formControlName]="i">
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+                <button class="btn btn-success mt-3 mb-3 mx-auto" type="button"
+                    (click)="mostrarHollandDos()">SIGUIENTE</button>
+            </div>
+        </div>
+
+        <!-- SEGUNDA SECCION TEST DE HOLLAND HABILIDADES-->
+        <div class="container" [hidden]="hollandActivatedDos" style="margin-bottom: 4%;">
+            <h3 class="text-center" style="font-weight: bold; margin: 3%;">TEST VOCACIONAL -
+                HOLLAND</h3>
+            <div class="card mb-3 card-seccion1">
+                <h5 class="mx-3"
+                    style="letter-spacing: 1PX; font-weight: bold; font-size: 1.35rem; margin: 10px 0; color: #32639e;">
+                    SECCIÓN 2: HABILIDADES
+                </h5>
+                <span class="text-danger mx-3">&nbsp;Lee atentamente cada pregunta</span>
+                <span class="text-danger mx-3 mb-2">&nbsp;Marca solo las actividades que puede
+                    realizar bien</span>
+            </div>
+            <div class="card card-seccion2">
+                <div class="card-header text-white" style="border-radius: 10px 10px 0 0; background-color: #2c6494;">
+                    <h5 class="mb-0" style="font-size: 1rem; text-align: center ;">DETALLES DE OPCIONES</h5>
+                </div>
+
+
+                <div class="card-container"></div>
+                <div class="card-body form-check-inline">
+                    <div class="row mt-4" formArrayName="respuestasHS">
+                        @for (preguntahs of pregHollandSecond; track preguntahs; let i = $index){
+                        <div class="col-12 col-md-6 question-row px-3 py-1 rounded transition-all">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <p>{{preguntahs.pregunta}}</p>
+                        </div>
+                        <div class="col-md-4">
+                                    <input class="form-check-input" style="border: 1px solid #1c1b1b;" type="checkbox"
+                                        [value]="1" [formControlName]="i">
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+                <button class="btn btn-success mt-3 mb-3 mx-auto" type="button"
+                    (click)="mostrarHollandTres()">SIGUIENTE</button>
+            </div>
+        </div>
+
+        <!-- TERCERA SECCION TEST DE HOLLAND OCUPACIONES-->
+        <div class="container" [hidden]="hollandActivatedTres" style="margin-bottom: 4%;">
+            <h3 class="text-center" style="font-weight: bold; margin: 3%;">TEST VOCACIONAL-
+                HOLLAND</h3>
+            <div class="card mb-3 card-seccion1">
+                <h5 class="mx-3"
+                    style="letter-spacing: 1PX; font-weight: bold; font-size: 1.35rem; margin: 10px 0; color: #32639e;">
+                    TERCERA PARTE: OCUPACIONES
+                </h5>
+                <span class="text-danger mx-3">&nbsp;Lee atentamente cada pregunta</span>
+                <span class="text-danger mx-3 mb-2">&nbsp;Marca solo las actividades que te
+                    interesen o agraden</span>
+            </div>
+            <div class="card card-seccion2">
+                <div class="card-header text-white" style="border-radius: 10px 10px 0 0; background-color: #2c6494;">
+                    <h5 class="mb-0" style="font-size: 1rem; text-align: center ;">DETALLES DE PREGUNTAS</h5>
+                </div>
+                <div class="card-container"></div>
+                <div class="card-body form-check-inline">
+                    <div class="row mt-4" formArrayName="respuestasHT">
+                        @for (preguntaht of pregHollandThird; track preguntaht; let i = $index){
+                        <div class="col-12 col-md-6 question-row px-3 py-1 rounded transition-all">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <p>{{preguntaht.pregunta}}</p>
+                        </div>
+                        <div class="col-md-4">
+                                    <input class="form-check-input" style="border: 1px solid #1c1b1b;" type="checkbox"
+                                        [value]="1" [formControlName]="i">
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+
+                </div>
+                <button class="btn btn-success mt-3 mb-3 mx-auto" type="button"
+                    (click)="mostrarHollandCuatro()">SIGUIENTE</button>
+            </div>
+        </div>
+
+        <!-- CUARTA SECCION TEST DE HOLLAND AUTOEVALUACION-->
+        <div class="container" [hidden]="hollandActivatedCuatro" style="margin-bottom: 4%;">
+            <h3 class="text-center" style="font-weight: bold; margin: 2%; ">TEST VOCACIONAL -
+                HOLLAND</h3>
+            <div class="card mb-3 card-seccion1">
+                <h5 class="mx-3"
+                    style="letter-spacing: 1PX; font-weight: bold; font-size: 1.35rem; margin: 10px 0; color: #32639e;">
+                    CUARTA PARTE: AUTOEVALUACION
+                </h5>
+                <span class="text-danger mx-3">&nbsp;Lee atentamente cada pregunta</span>
+                <span class="text-danger mx-3 mb-2">&nbsp;Califica de un 1 al 7 (siendo 7 la nota
+                    máxima) tus habilidades en comparación de otras personas de tu edad</span>
+            </div>
+            <div class="card card-seccion2">
+                <div class="card-container"></div>
+                <div class="card-body form-check-inline">
+                    <div class="row mt-3" formArrayName="respuestasHA">
+                        @for (preguntahav of pregHollandAutoev; track preguntahav; let l = $index) {
+                        <div class="col-12 question-row px-3 py-1 rounded transition-all">
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <p [class.error]="enviadoHlCuatro() && respuestasHA.at(l).invalid">{{preguntahav.pregunta}}</p>
+                                </div>
+                        <div class="col-md-8 mb-3">
+                            @for (val of [1,2,3,4,5,6,7]; track val) {
+                            <label class="form-check-label opcion-radio">{{val}}
+                                <input class="form-check-input" style="border: 1px solid #1c1b1b;" type="radio"
+                                    [value]="val" [formControlName]="l.toString()">
+                            </label>
+                            }
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                    <!-- <button class="btn btn-danger mt-3 mb-3 mx-auto" type="button" (click)="mostrarHollandCuatro()">SIGUIENTE</button> -->
+                </div>
+            </div>
+            <br>
+            <div class="card align-items-center card-seccion1">
+                <button type="submit" class="btn btn-primary mt-3 mb-3">Completar Registro</button>
+            </div>
+        </div>
+
+    </form>
+</div>

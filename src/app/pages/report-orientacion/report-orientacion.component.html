@@ -1,0 +1,112 @@
+<div class="top-container" style="margin: 1%;">
+  <h1 class="titulo">ESTADISTICAS DEL TEST VOCACIONAL</h1>
+  <div class="filters">
+    <label>
+      Provincia:
+      <select [(ngModel)]="idProvincia" (change)="onProvinciaChange()">
+        
+      
+        <option [ngValue]="undefined" disabled hidden selected>Seleccione Provincia</option>
+        
+        <option *ngFor="let p of provincias" [ngValue]="p.idProvincia">{{ p.nombre }}</option>
+      </select>
+    </label>
+
+    <label>
+      Municipio:
+      <select [(ngModel)]="idMunicipio" (change)="onMunicipioChange()">
+        
+        <option [ngValue]="undefined" disabled hidden selected>Seleccione Municipio</option>
+        
+        <option *ngFor="let m of municipios" [ngValue]="m.idMunicipio">{{ m.nombre }}</option>
+      </select>
+    </label>
+
+
+    <label>
+      Año Inicio:
+      <select [(ngModel)]="fechaInicio">
+        <option [value]="undefined" disabled hidden selected>Seleccione Año</option>
+        <option *ngFor="let y of listaAnios" [value]="y">{{ y }}</option>
+      </select>
+    </label>
+
+    <label>
+      Año Fin:
+      <select [(ngModel)]="fechaFin">
+        
+        <option [value]="undefined" disabled hidden selected>Seleccione Año</option>
+
+        <option *ngFor="let y of listaAnios" [value]="y">{{ y }}</option>
+      </select>
+    </label>
+
+    <div class="buttons">
+      <button (click)="cargarResultados()">Buscar</button>
+      <button (click)="limpiarFiltros()">Limpiar</button>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- Imagen + mensaje cuando no hay resultados o antes de buscar -->
+    <div *ngIf="mostrarImagenNoResultados" class="no-resultados">
+    </div>
+
+    <!-- Tabla cuando hay resultados -->
+    <div class="table-container" *ngIf="resultados.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>Provincia</th>
+            <th>Municipio</th>
+            <th>Chaside</th>
+            <th>Año</th>
+            <th>Respuestas</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let r of resultados">
+            <td>{{ r.provincia }}</td>
+            <td>{{ r.municipio }}</td>
+            <td>{{ r.chaside }}</td>
+            <td>{{ r.fecha }}</td>
+            <td>{{ r.cantidadEstudiantes }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+
+  <div *ngIf="mostrarGrafico" class="leyenda-lateral">
+    <h4>TABLA DE RESULTADOS</h4>
+    <div *ngFor="let label of chartData.labels; let i = index" class="item-leyenda">
+      <div class="color-label">
+        <div [style.background]="chartData.datasets[0].backgroundColor[i]" class="color-box">
+        </div>
+        <strong>{{ label }}</strong>
+      </div>
+      <ul>
+        <li *ngFor="let descripcion of nombresPorLabel[label]">{{ descripcion }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div *ngIf="isBrowser && mostrarGrafico" class="grafico-container">
+    <h4 style="text-align: center; font-weight: bold;">GRAFICA DE RESULTADOS</h4>
+    <br>
+    <canvas id="myChart" baseChart [data]="chartData" [type]="'pie'" [options]="chartOptions">
+    </canvas>
+  </div>
+
+  <div class="botones-exportar" *ngIf="mostrarBotonesExportar 
+            && idProvincia 
+            && idMunicipio 
+            && fechaInicio">
+    <button (click)="generarPDFconGraficoYTabla()">Descargar PDF</button>
+  </div>
+
+
+</div>
