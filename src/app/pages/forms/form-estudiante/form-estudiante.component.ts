@@ -44,7 +44,7 @@ export class FormEstudianteComponent implements OnInit, OnDestroy {
 
   // ── Datos de selección de ubicación ─────────────────────────────────────────
   provincias: Provincia[] = [];
-  
+
   municipios: Municipio[] = [];
   municipiosDeProvincia: Municipio[] = [];
   otrosMunicipios: Municipio[] = [];
@@ -122,7 +122,7 @@ export class FormEstudianteComponent implements OnInit, OnDestroy {
     idChaside: 0,
     idHolland: 0
   };
-  chaside: Chaside[]= [];
+  chaside: Chaside[] = [];
   holland: Holland[] = [];
 
   constructor(
@@ -162,7 +162,7 @@ export class FormEstudianteComponent implements OnInit, OnDestroy {
       edad: new FormControl(null, [Validators.required, Validators.min(14), Validators.max(80)]),
       celular: new FormControl(null, [Validators.required, Validators.pattern(/^\d{8}$/)]),
       // Valores reales subyacentes que se enviarán (IDs)
-      provincia: new FormControl<number | null>({ value: null, disabled: true }, Validators.required),
+      provincia: new FormControl<number | null>(null, Validators.required),
       municipio: new FormControl<number | null>(null, Validators.required),
       colegio: new FormControl<number | null>(null),
 
@@ -231,17 +231,17 @@ export class FormEstudianteComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.chasideService.getAll().subscribe(data => {
-        this.chaside = data;
+      this.chaside = data;
     })
 
     this.hollandService.getAll().subscribe(data => {
-        this.holland = data;
+      this.holland = data;
     })
 
     this.provinciaService.getProvincias().pipe(takeUntil(this.destroy$)).subscribe(data => {
       this.provincias = data;
     });
-    
+
     this.municipioService.getAllMunicipios().pipe(takeUntil(this.destroy$)).subscribe(data => {
       this.municipios = data;
       this.municipiosDeProvincia = [];
@@ -255,7 +255,6 @@ export class FormEstudianteComponent implements OnInit, OnDestroy {
     });
 
     // ── Lógica de Autocompletado No Restrictivo ──────────────
-    
     // 1. Cuando el estudiante selecciona una provincia
     this.form.get('provincia')!.valueChanges
       .pipe(takeUntil(this.destroy$))
@@ -265,6 +264,13 @@ export class FormEstudianteComponent implements OnInit, OnDestroy {
           this.otrosMunicipios = [...this.municipios];
           return;
         }
+        const munActual = this.municipios.find(m => m.idMunicipio === this.municipio?.value);
+        if (munActual && munActual.idProvincia !== idProvincia) {
+          this.municipio?.setValue(null, { emitEvent: false });
+          this.colegiosDeMunicipio = [];
+          this.otrosColegios = [...this.colegios];
+        }
+
         this.municipiosDeProvincia = this.municipios.filter(m => m.idProvincia === idProvincia);
         this.otrosMunicipios = this.municipios.filter(m => m.idProvincia !== idProvincia);
       });
@@ -281,14 +287,16 @@ export class FormEstudianteComponent implements OnInit, OnDestroy {
 
         const municipioSeleccionado = this.municipios.find(m => m.idMunicipio === idMunicipio);
         if (municipioSeleccionado) {
-          // Autocompletar provincia
-          this.provincia!.setValue(municipioSeleccionado.idProvincia, { emitEvent: false });
-          // Actualizar arreglos de provincia
+          if (this.provincia?.value !== municipioSeleccionado.idProvincia) {
+            this.provincia?.setValue(municipioSeleccionado.idProvincia, { emitEvent: false });
+          }
           this.municipiosDeProvincia = this.municipios.filter(m => m.idProvincia === municipioSeleccionado.idProvincia);
           this.otrosMunicipios = this.municipios.filter(m => m.idProvincia !== municipioSeleccionado.idProvincia);
         }
-
-        // Actualizar arreglos de colegio
+        const colActual = this.colegios.find(c => c.idColegio === this.colegio?.value);
+        if (colActual && colActual.idMunicipio !== idMunicipio) {
+          this.colegio?.setValue(null, { emitEvent: false });
+        }
         this.colegiosDeMunicipio = this.colegios.filter(c => c.idMunicipio === idMunicipio);
         this.otrosColegios = this.colegios.filter(c => c.idMunicipio !== idMunicipio);
       });
@@ -311,12 +319,12 @@ export class FormEstudianteComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((usarNombre: boolean) => {
         if (usarNombre) {
-            this.colegio!.setValue(null);
-            
-            this.nombreColegio!.enable();
+          this.colegio!.setValue(null);
+
+          this.nombreColegio!.enable();
         } else {
-            this.nombreColegio!.setValue(null);
-            this.nombreColegio!.disable();
+          this.nombreColegio!.setValue(null);
+          this.nombreColegio!.disable();
         }
       });
 
@@ -377,7 +385,7 @@ export class FormEstudianteComponent implements OnInit, OnDestroy {
     const nombreColegio = this.nombreColegio?.value;
     if (
       this.carnetNum?.invalid || this.carnetExt?.invalid || this.nombre?.invalid ||
-      this.apMaterno?.invalid || this.apPaterno?.invalid || this.curso?.invalid || 
+      this.apMaterno?.invalid || this.apPaterno?.invalid || this.curso?.invalid ||
       this.municipio?.invalid || this.provincia?.invalid || !this.colegioValido()
     ) {
       this.mostrarNotificacionIncompleto('Debes llenar todos los campos');
@@ -391,12 +399,12 @@ export class FormEstudianteComponent implements OnInit, OnDestroy {
       this.mostrarNotificacionIncompleto('Debes ingresar un número de celular válido (8 dígitos)');
       this.enviadoEst.set(true);
       return;
-    } else if (this.usarNombreColegio?.value && !nombreColegio){
-        this.mostrarNotificacionIncompleto('Debes escribir el nombre de tu colegio');
-        return;
+    } else if (this.usarNombreColegio?.value && !nombreColegio) {
+      this.mostrarNotificacionIncompleto('Debes escribir el nombre de tu colegio');
+      return;
     } else if (!this.usarNombreColegio?.value && !colegio) {
-        this.mostrarNotificacionIncompleto('Debes seleccionar un colegio válido de la lista o marcar la casilla si no aparece');
-        return;
+      this.mostrarNotificacionIncompleto('Debes seleccionar un colegio válido de la lista o marcar la casilla si no aparece');
+      return;
     }
     else {
       this.formularioActived = true;
@@ -615,9 +623,9 @@ export class FormEstudianteComponent implements OnInit, OnDestroy {
 
     // obtener puntaje chaside
     const puntajeChaside = Object.entries(resultadoChaside)
-        .sort((a, b) => b[1] - a[1])
-        .map(([letra]) => letra)
-        .join('');
+      .sort((a, b) => b[1] - a[1])
+      .map(([letra]) => letra)
+      .join('');
 
     // obtener el idChaside correspondiente al puntaje obtenido, tambien obtener el puntaje de interes y de aptitud
     const letraPrincipalChaside = puntajeChaside[0];
@@ -626,7 +634,7 @@ export class FormEstudianteComponent implements OnInit, OnDestroy {
     this.puntajeAptitud = resultadoAptitud[letraPrincipalChaside as keyof typeof resultadoAptitud];
 
     const objChasideEncontrado = this.chaside.find(
-        c => c.puntaje === letraPrincipalChaside
+      c => c.puntaje === letraPrincipalChaside
     );
     const idChaside = objChasideEncontrado?.idChaside ?? null;
 
@@ -648,15 +656,15 @@ export class FormEstudianteComponent implements OnInit, OnDestroy {
 
     // obtener el puntaje holland de acuerdo a las preguntas del formulario
     const puntajeHolland = Object.entries(resultadoHolland)
-        .sort((a,b) => b[1] - a[1])
-        .map(([letra]) => letra)
-        .join('');
+      .sort((a, b) => b[1] - a[1])
+      .map(([letra]) => letra)
+      .join('');
 
     // obtener el idHolland asociado a la respuestas del formulario
     const letraPrincipalHolland = puntajeHolland[0];
 
     const objHollandEncontrado = this.holland.find(
-        h => h.codigo === letraPrincipalHolland
+      h => h.codigo === letraPrincipalHolland
     );
     const idHolland = objHollandEncontrado?.idHolland ?? null;
 
@@ -665,56 +673,56 @@ export class FormEstudianteComponent implements OnInit, OnDestroy {
     const fechaStr = new Date().toLocaleDateString();
 
     const payload = {
-        estudianteDto: {
-            ciEstudiante : carnet,
-            nombre: this.nombre?.value,
-            apPaterno: this.apPaterno?.value,
-            apMaterno: this.apMaterno?.value,
-            idColegio: this.colegio?.value,
-            nombreColegio: this.nombreColegio?.value,
-            curso: this.curso?.value,
-            edad: this.edad?.value,
-            celular: this.celular?.value,
-            id_municipio: this.municipio?.value
-        },
-        resultadoDto: {
-            interes: this.puntajeInteres,
-            aptitud: this.puntajeAptitud,
-            puntajeHolland,
-            puntajeChaside,
-            fecha: fechaStr,
-            idChaside,
-            idHolland
-        }
+      estudianteDto: {
+        ciEstudiante: carnet,
+        nombre: this.nombre?.value,
+        apPaterno: this.apPaterno?.value,
+        apMaterno: this.apMaterno?.value,
+        idColegio: this.colegio?.value,
+        nombreColegio: this.nombreColegio?.value,
+        curso: this.curso?.value,
+        edad: this.edad?.value,
+        celular: this.celular?.value,
+        id_municipio: this.municipio?.value
+      },
+      resultadoDto: {
+        interes: this.puntajeInteres,
+        aptitud: this.puntajeAptitud,
+        puntajeHolland,
+        puntajeChaside,
+        fecha: fechaStr,
+        idChaside,
+        idHolland
+      }
     }
     console.log(payload)
 
     this.evaluacionService.guardarEvaluacion(payload).subscribe({
-        next: response => {
-            const navigationExtras: NavigationExtras = {
-                state: {
-                    bdform: response.guardarResultado,
-                    nombre: [`${response.nombre} ${response.apPaterno} ${response.apMaterno}`],
-                    carnet: response.ciEstudiante,
-                    interes: response.puntajeInteres,
-                    aptitud: response.puntajeAptitud,
-                    holland: response.holland,
-                    colegio: response.nombreColegio,
-                    chaside: response.chaside[0],
-                    celular: response.celular,
-                    curso: response.curso,
-                    edad: response.edad,
-                    municipio: response.municipio,
-                    provincia: response.provincia
-                }
-            };
-            this.router.navigate(['formulario/resultado'], navigationExtras);
-        },
-        error: (error:any) => {
-            console.error('error al guardar la evaluacion', error);
-        }
+      next: response => {
+        const navigationExtras: NavigationExtras = {
+          state: {
+            bdform: response.guardarResultado,
+            nombre: [`${response.nombre} ${response.apPaterno} ${response.apMaterno}`],
+            carnet: response.ciEstudiante,
+            interes: response.puntajeInteres,
+            aptitud: response.puntajeAptitud,
+            holland: response.holland,
+            colegio: response.nombreColegio,
+            chaside: response.chaside[0],
+            celular: response.celular,
+            curso: response.curso,
+            edad: response.edad,
+            municipio: response.municipio,
+            provincia: response.provincia
+          }
+        };
+        this.router.navigate(['formulario/resultado'], navigationExtras);
+      },
+      error: (error: any) => {
+        console.error('error al guardar la evaluacion', error);
+      }
     })
-  
+
   }
 
 }
